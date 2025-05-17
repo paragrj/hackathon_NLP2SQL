@@ -1,0 +1,738 @@
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Query result: []
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('Stage', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: calculate total loan amount for all customers?
+INFO:__main__:Message from API/Answer from API: SELECT SUM(LoanAmount) AS TotalLoanAmount
+FROM Loans;
+INFO:__main__:Generated SQL query: SELECT SUM(LoanAmount) AS TotalLoanAmount
+FROM Loans;
+INFO:__main__:Query result: [(1325000,)]
+INFO:__main__:Description of the result: (('TotalLoanAmount', None, None, None, None, None, None),)
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: ```sql
+SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+```
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: ```sql
+SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+```
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', '2025-04-30', 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('AssessmentDate', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.Stage
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.Stage
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Query result: []
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('AssessmentDate', None, None, None, None, None, None), ('Stage', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.Stage
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.Stage
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID;
+INFO:__main__:Query result: [('Alice Corp', 1000000, 1), ('Bob Ltd', 250000, 2), ('Charlie Inc', 75000, 3)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('Stage', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3
+ORDER BY Impairments.ExpectedCreditLoss DESC;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Impairments.AssessmentDate, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3
+ORDER BY Impairments.ExpectedCreditLoss DESC;
+INFO:__main__:Query result: []
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('AssessmentDate', None, None, None, None, None, None), ('Stage', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AvgRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AvgRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AvgRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AvgRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT c.Name, l.LoanAmount, i.ExpectedCreditLoss
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+JOIN Impairments i ON l.LoanID = i.LoanID;
+INFO:__main__:Generated SQL query: SELECT c.Name, l.LoanAmount, i.ExpectedCreditLoss
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+JOIN Impairments i ON l.LoanID = i.LoanID;
+INFO:__main__:Query result: [('Alice Corp', 1000000, 5000), ('Bob Ltd', 250000, 15000), ('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: “What is the average risk rating by customer segment?”
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: What is the total loan amount given to each customer?
+INFO:__main__:Message from API/Answer from API: SELECT c.CustomerID, c.Name, SUM(l.LoanAmount) AS TotalLoanAmount
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+GROUP BY c.CustomerID, c.Name;
+INFO:__main__:Generated SQL query: SELECT c.CustomerID, c.Name, SUM(l.LoanAmount) AS TotalLoanAmount
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+GROUP BY c.CustomerID, c.Name;
+INFO:__main__:Query result: [(1, 'Alice Corp', 1000000), (2, 'Bob Ltd', 250000), (3, 'Charlie Inc', 75000)]
+INFO:__main__:Description of the result: (('CustomerID', None, None, None, None, None, None), ('Name', None, None, None, None, None, None), ('TotalLoanAmount', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: What is the total loan amount given to each customer?
+INFO:__main__:Message from API/Answer from API: SELECT c.Name, SUM(l.LoanAmount) AS TotalLoanAmount
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+GROUP BY c.Name;
+INFO:__main__:Generated SQL query: SELECT c.Name, SUM(l.LoanAmount) AS TotalLoanAmount
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+GROUP BY c.Name;
+INFO:__main__:Query result: [('Alice Corp', 1000000), ('Bob Ltd', 250000), ('Charlie Inc', 75000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('TotalLoanAmount', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: List all loans with their interest rates and customer names.
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Generated SQL query: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Query result: [(1001, 5.5, 'Alice Corp'), (1002, 6.2, 'Bob Ltd'), (1003, 7, 'Charlie Inc')]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('InterestRate', None, None, None, None, None, None), ('Name', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: List all loans with their interest rates and customer names.
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Generated SQL query: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Query result: [(1001, 5.5, 'Alice Corp'), (1002, 6.2, 'Bob Ltd'), (1003, 7, 'Charlie Inc')]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('InterestRate', None, None, None, None, None, None), ('Name', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: List all loans with their interest rates and customer names.
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Generated SQL query: SELECT l.LoanID, l.InterestRate, c.Name
+FROM Loans l
+JOIN Customers c ON l.CustomerID = c.CustomerID;
+INFO:__main__:Query result: [(1001, 5.5, 'Alice Corp'), (1002, 6.2, 'Bob Ltd'), (1003, 7, 'Charlie Inc')]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('InterestRate', None, None, None, None, None, None), ('Name', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Which customers have loans in impairment stage 3
+INFO:__main__:Message from API/Answer from API: SELECT c.Name
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT c.Name
+FROM Customers c
+JOIN Loans l ON c.CustomerID = l.CustomerID
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc',)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None),)
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: What is the average risk rating by customer segment?
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: What is the average risk rating by customer segment?
+INFO:__main__:Message from API/Answer from API: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Generated SQL query: SELECT Segment, AVG(RiskRating) AS AverageRiskRating
+FROM Customers
+GROUP BY Segment;
+INFO:__main__:Query result: [('Corporate', 2.0), ('Retail', 4.0), ('SME', 3.0)]
+INFO:__main__:Description of the result: (('Segment', None, None, None, None, None, None), ('AverageRiskRating', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025.
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Loans.LoanAmount, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Impairments.Stage = 3;
+INFO:__main__:Query result: [('Charlie Inc', 75000, 30000)]
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('LoanAmount', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: 
+INFO:__main__:Message from API/Answer from API: SELECT Customers.Name, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Generated SQL query: SELECT Customers.Name, Impairments.Stage, Impairments.ExpectedCreditLoss
+FROM Customers
+JOIN Loans ON Customers.CustomerID = Loans.CustomerID
+JOIN Impairments ON Loans.LoanID = Impairments.LoanID
+WHERE Customers.Segment = 'Corporate'
+AND Impairments.Stage = 3;
+INFO:__main__:Query result: []
+INFO:__main__:Description of the result: (('Name', None, None, None, None, None, None), ('Stage', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Message from API/Answer from API: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result: [(1001, 5000), (1002, 15000), (1003, 30000)]
+INFO:__main__:Description of the result: (('LoanID', None, None, None, None, None, None), ('ExpectedCreditLoss', None, None, None, None, None, None))
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:__main__:Starting the NLP to SQL App
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Generated SQL query: SELECT l.LoanID, l.LoanAmount, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result count: 3
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result count: 3
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result count: 3
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
+INFO:__main__:Starting the NLP to SQL App
+INFO:httpx:HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+INFO:__main__:User input: Show the expected credit loss for each loan as of April 30, 2025. 
+INFO:__main__:Generated SQL query: SELECT l.LoanID, i.ExpectedCreditLoss
+FROM Loans l
+JOIN Impairments i ON l.LoanID = i.LoanID
+WHERE i.AssessmentDate <= '2025-04-30';
+INFO:__main__:Query result count: 3
+INFO:__main__:Execution completed successfully.
+INFO:__main__:Starting the NLP to SQL App
