@@ -1,32 +1,76 @@
--- Customers Table
 
-CREATE TABLE Customers (
-    CustomerID INT PRIMARY KEY,
-    Name VARCHAR(100),
-    Segment VARCHAR(50),
-    RiskRating INT
+
+-- CREATE TABLE IF NOT EXISTS Customers (
+--     customer_id INT PRIMARY KEY,
+--     first_name VARCHAR(100),
+--     last_name VARCHAR(100),
+--     date_of_birth DATE,
+--     email VARCHAR(150),
+--     phone_number VARCHAR(15)
+-- );
+
+-- CREATE TABLE Loans (
+--     loan_id INT PRIMARY KEY,
+--     customer_id INT,
+--     loan_amount DECIMAL(15, 2),
+--     interest_rate DECIMAL(5, 2),
+--     loan_start_date DATE,
+--     loan_end_date DATE,
+--     FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+-- );
+
+-- CREATE TABLE Loan_Impairments (
+--     impairment_id INT PRIMARY KEY,
+--     loan_id INT,
+--     impairment_type VARCHAR(50),
+--     impairment_amount DECIMAL(15, 2),
+--     impairment_date DATE,
+--     FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
+-- );
+
+-- CREATE TABLE Loan_Payments (
+--     payment_id INT PRIMARY KEY,
+--     loan_id INT,
+--     payment_date DATE,
+--     payment_amount DECIMAL(15, 2),
+--     FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
+-- );
+
+
+
+CREATE TABLE IF NOT EXISTS Customers (
+    customer_id INT PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    date_of_birth DATE,
+    email VARCHAR(150),
+    phone_number VARCHAR(15)
 );
-
--- Loans Table
 
 CREATE TABLE Loans (
-    LoanID INT PRIMARY KEY,
-    CustomerID INT,
-    LoanAmount DECIMAL(18, 2),
-    LoanStartDate DATE,
-    MaturityDate DATE,
-    InterestRate DECIMAL(5, 2),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+    loan_id INT PRIMARY KEY,
+    customer_id INT,
+    loan_amount DECIMAL(15, 2),
+    interest_rate DECIMAL(5, 2),
+    loan_start_date DATE,
+    loan_end_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- Impairments Table
-
-CREATE TABLE Impairments (
-    ImpairmentID INT PRIMARY KEY,
-    LoanID INT,
-    AssessmentDate DATE,
-    Stage INT CHECK (Stage IN (1, 2, 3)),ex
-    ExpectedCreditLoss DECIMAL(18, 2),
-    ProvisionAmount DECIMAL(18, 2),
-    FOREIGN KEY (LoanID) REFERENCES Loans(LoanID)
+CREATE TABLE Loan_Impairments (
+    impairment_id INT PRIMARY KEY,
+    loan_id INT,
+    impairment_type VARCHAR(50),
+    impairment_amount DECIMAL(15, 2),
+    impairment_date DATE,
+    FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
 );
+
+CREATE TABLE Loan_Payments (
+    payment_id INT PRIMARY KEY,
+    loan_id INT,
+    payment_date DATE,
+    payment_amount DECIMAL(15, 2),
+    FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
+);
+"""

@@ -31,6 +31,9 @@ CREATE TABLE Impairments (
     FOREIGN KEY (LoanID) REFERENCES Loans(LoanID)
 );
 
+
+
+
 -- Insert sample customers
 INSERT INTO Customers VALUES (1, 'Alice Corp', 'Corporate', 2);
 INSERT INTO Customers VALUES (2, 'Bob Ltd', 'SME', 3);
