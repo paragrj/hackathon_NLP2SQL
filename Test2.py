@@ -224,17 +224,43 @@ if 'original_df' in st.session_state:
 
 # Visualization
 if 'original_df' in st.session_state:
-    chart_type = st.selectbox("📈 Visualize results", ["None", "Bar", "Line", "Area"])
+    st.subheader("📈 Visualization")
     df = st.session_state['original_df']
-    if df.shape[1] == 2 and pd.api.types.is_numeric_dtype(df[df.columns[1]]):
-        chart_df = df.set_index(df.columns[0])
-        fig, ax = plt.subplots()
-        if chart_type == "Bar":
-            chart_df.plot(kind='bar', ax=ax, legend=False)
-        elif chart_type == "Line":
-            chart_df.plot(kind='line', ax=ax, legend=False)
-        elif chart_type == "Area":
-            chart_df.plot(kind='area', ax=ax, legend=False)
-        st.pyplot(fig)
+
+    chart_type = st.selectbox("📊 Choose chart type", ["None", "Bar", "Line", "Area"])
+
+    if chart_type != "None":
+        try:
+            # Case 1: Simple 2-column chart (e.g., Category vs Value)
+            if df.shape[1] == 2 and pd.api.types.is_numeric_dtype(df[df.columns[1]]):
+                chart_df = df.set_index(df.columns[0])
+                fig, ax = plt.subplots()
+                if chart_type == "Bar":
+                    chart_df.plot(kind='bar', ax=ax, legend=False)
+                elif chart_type == "Line":
+                    chart_df.plot(kind='line', ax=ax, legend=False)
+                elif chart_type == "Area":
+                    chart_df.plot(kind='area', ax=ax, legend=False)
+                st.pyplot(fig)
+
+            # Case 2: Multi-series chart from pivoted 3-column data
+            elif df.shape[1] == 3:
+                pivot_df = df.pivot(index=df.columns[1], columns=df.columns[0], values=df.columns[2])
+                pivot_df = pivot_df.sort_index()
+                fig, ax = plt.subplots()
+                if chart_type == "Bar":
+                    pivot_df.plot(kind='bar', stacked=True, ax=ax)
+                elif chart_type == "Line":
+                    pivot_df.plot(kind='line', ax=ax)
+                elif chart_type == "Area":
+                    pivot_df.plot(kind='area', ax=ax)
+                st.pyplot(fig)
+
+            else:
+                st.info("ℹ️ Please ensure your data has either 2 columns (Category + Value) or 3 columns (Category, Time, Value) to visualize.")
+
+        except Exception as e:
+            st.warning(f"⚠️ Could not render chart: {e}")
+
 
 con.close()
