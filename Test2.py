@@ -7,8 +7,10 @@ import logging
 import io
 import matplotlib.pyplot as plt
 import pandas as pd
+import datetime
 from dotenv import load_dotenv
 from openai import AzureOpenAI
+from pandas.errors import ParserError
 
 # Load environment variables
 load_dotenv()
@@ -30,15 +32,43 @@ client = AzureOpenAI(
     api_version='2024-12-01-preview',
 )
 
-# Load metadata
-with open('databaseMetaData.sql', 'r') as file:
-    db_file = file.read().replace('\n', '')
+# Connect to SQLite
+con = sqlite3.connect('database.db')
 
-context = f'''Generate a SQL query ready to run on sqlite database based on this metadata:\n{db_file}\nReturn ONLY SQL, no explanation.'''
+# Utility: Refresh database metadata
+def refresh_metadata():
+    table_info = ""
+    cursor = con.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cursor.fetchall()
+    for (table,) in tables:
+        cursor.execute(f"PRAGMA table_info({table});")
+        cols = cursor.fetchall()
+        columns = ", ".join([f"{col[1]} ({col[2]})" for col in cols])
+        table_info += f"Table {table}: {columns}\n"
+    return table_info
+
+def convert_possible_dates(df):
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            try:
+                df[col] = pd.to_datetime(df[col], format="%Y-%m-%d", errors='raise')
+            except (ParserError, ValueError):
+                try:
+                    df[col] = pd.to_datetime(df[col], format="%d/%m/%Y", errors='raise')
+                except (ParserError, ValueError):
+                    continue
+        elif pd.api.types.is_numeric_dtype(df[col]):
+            if df[col].between(20000, 60000).all():  # likely Excel date serials
+                try:
+                    df[col] = df[col].apply(lambda x: datetime.datetime(1899, 12, 30) + datetime.timedelta(days=x))
+                except:
+                    pass
+    return df
 
 # App title
 st.set_page_config(page_title="🏦 NLP SQL Explorer", layout="wide")
-st.title("💡 Insight Squads: Your AI Lens into Risk Data")
+st.title("💡 Insight Squads: Your AI Lens into your Data")
 st.markdown(
     "<div style='font-size:16px; color:blue;'>Empowering decision-makers through smart, natural language analytics</div>",
     unsafe_allow_html=True
@@ -55,10 +85,6 @@ dashboard_option = st.sidebar.selectbox("Choose a Dashboard", (
     "Loans with Impairments"
 ))
 
-# Connect to DB
-con = sqlite3.connect('database.db')
-df = pd.DataFrame()
-
 # Upload Excel to database
 st.sidebar.markdown("---")
 st.sidebar.subheader("📁 Upload Excel to Database")
@@ -68,13 +94,12 @@ if uploaded_file:
     try:
         xls = pd.ExcelFile(uploaded_file)
         for sheet_name in xls.sheet_names:
-            df_sheet = xls.parse(sheet_name)
+            df_sheet = xls.parse(sheet_name, parse_dates=True)
+            df_sheet = convert_possible_dates(df_sheet)
 
-            # Sanitize table name
             table_name = sheet_name.strip().replace(" ", "_").replace("-", "_")
             table_name = ''.join(char for char in table_name if char.isalnum() or char == '_')
 
-            # Replace table if exists
             df_sheet.to_sql(table_name, con, if_exists='replace', index=False)
             st.sidebar.success(f"✅ Table '{table_name}' loaded.")
         logger.info("Excel data uploaded and imported into SQLite.")
@@ -135,6 +160,7 @@ predefined_queries = {
 }
 
 # Dashboard Output
+df = pd.DataFrame()
 if dashboard_option != "None":
     try:
         result = con.execute(predefined_queries[dashboard_option])
@@ -150,26 +176,29 @@ if dashboard_option != "None":
         logger.error(f"Dashboard query error: {e}")
         st.error(f"Dashboard error: {e}")
 
+# Context Prompt with live metadata
+context = f"""Generate a SQL query ready to run on sqlite database based on this metadata:\n{refresh_metadata()}\nReturn ONLY SQL, no explanation."""
+
 # NLP to SQL
 with st.form("sql_form"):
-    user_input = st.text_area("💬 Ask a question about your banking data:")
+    user_input = st.text_area("💬 Ask a question about your data:")
     submit_btn = st.form_submit_button("Submit")
 
 if submit_btn and user_input:
     try:
-        completion = client.chat.completions.create(
-            model=DeploymentName,
-            messages=[{"role": "system", "content": context}, {"role": "user", "content": user_input}],
-            temperature=0.5,
-            max_tokens=1000,
-        )
-        sql_text = json.loads(completion.to_json())['choices'][0]['message']['content'].strip()
+        with st.spinner("Generating SQL and fetching results..."):
+            completion = client.chat.completions.create(
+                model=DeploymentName,
+                messages=[{"role": "system", "content": context}, {"role": "user", "content": user_input}],
+                temperature=0.5,
+                max_tokens=1000,
+            )
+            sql_text = json.loads(completion.to_json())['choices'][0]['message']['content'].strip()
 
-        if not sql_text.strip().upper().startswith("SELECT"):
-            st.warning("🤖 I couldn't understand your request as a SQL question. Please try rephrasing.")
-            logger.warning(f"Non-SQL response received: {sql_text}")
-        else:
-            try:
+            if not sql_text.strip().upper().startswith("SELECT"):
+                st.warning("🤖 I couldn't understand your request as a SQL question. Please try rephrasing.")
+                logger.warning(f"Non-SQL response received: {sql_text}")
+            else:
                 sql_query = sql_text.split(";")[0].strip() + ';'
                 result = con.execute(sql_query)
                 df = pd.DataFrame(result.fetchall(), columns=[desc[0] for desc in result.description])
@@ -182,15 +211,12 @@ if submit_btn and user_input:
 
                 logger.info(f"User query: {user_input}")
                 logger.info(f"Generated SQL: {sql_query}")
-            except Exception as e:
-                st.error(f"SQL execution error: {e}")
-                logger.error(f"SQL execution error: {e}")
 
     except Exception as e:
         logger.error(f"SQL processing error: {e}")
         st.error(f"Something went wrong: {e}")
 
-# Export options
+# Export
 if 'original_df' in st.session_state:
     excel_buffer = io.BytesIO()
     st.session_state['original_df'].to_excel(excel_buffer, index=False, engine='xlsxwriter')

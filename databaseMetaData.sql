@@ -73,4 +73,16 @@ CREATE TABLE Loan_Payments (
     payment_amount DECIMAL(15, 2),
     FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
 );
+
+
+
+CREATE TABLE Impairments (
+    impairment_id TEXT PRIMARY KEY,
+    loan_id TEXT,
+    AssesmentDate DATE,
+    stage INTEGER,
+    expected_credit_loss INTEGER,
+    provision_amount INTEGER,
+    FOREIGN KEY (loan_id) REFERENCES Loans(loan_id)
+);
 """

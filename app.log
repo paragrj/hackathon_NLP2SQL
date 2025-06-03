@@ -793,3 +793,334 @@ ORDER BY month_year;
 FROM Loan_Payments
 GROUP BY strftime('%Y-%m', payment_date)
 ORDER BY month_year;
+2025-05-31 11:09:49,539 - INFO - App started
+2025-06-03 05:39:07,854 - INFO - App started
+2025-06-03 05:41:16,245 - INFO - App started
+2025-06-03 05:41:18,823 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:41:27,185 - INFO - App started
+2025-06-03 05:41:28,596 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:47:11,339 - INFO - App started
+2025-06-03 05:47:12,639 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:47:14,965 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:47:15,025 - INFO - User query: Show customers who have impairments but no payments
+2025-06-03 05:47:15,025 - INFO - Generated SQL: SELECT DISTINCT c.customer_id, c.first_name, c.last_name
+FROM Customers c
+JOIN Loans l ON c.customer_id = l.customer_id
+JOIN Loan_Impairments li ON l.loan_id = li.loan_id
+LEFT JOIN Loan_Payments lp ON l.loan_id = lp.loan_id
+WHERE lp.payment_id IS NULL;
+2025-06-03 05:47:38,000 - INFO - App started
+2025-06-03 05:47:39,214 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:47:40,551 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:47:40,559 - INFO - User query: Show the total loan amount, total impairments, and total payments for each customer
+2025-06-03 05:47:40,560 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, 
+COALESCE(SUM(l.loan_amount), 0) AS total_loan_amount, 
+COALESCE(SUM(i.impairment_amount), 0) AS total_impairments, 
+COALESCE(SUM(p.payment_amount), 0) AS total_payments
+FROM Customers c
+LEFT JOIN Loans l ON c.customer_id = l.customer_id
+LEFT JOIN Loan_Impairments i ON l.loan_id = i.loan_id
+LEFT JOIN Loan_Payments p ON l.loan_id = p.loan_id
+GROUP BY c.customer_id, c.first_name, c.last_name;
+2025-06-03 05:50:59,696 - INFO - App started
+2025-06-03 05:51:01,256 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:51:02,128 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:51:02,133 - WARNING - Non-SQL response received: ```sql
+WITH TotalLoanAmount AS (
+    SELECT customer_id, SUM(loan_amount) AS total_amount
+    FROM Loans
+    GROUP BY customer_id
+)
+SELECT c.customer_id, c.first_name, c.last_name, t.total_amount,
+       ROUND((t.total_amount / (SELECT SUM(total_amount) FROM TotalLoanAmount) * 100), 2) AS percentage
+FROM Customers c
+JOIN TotalLoanAmount t ON c.customer_id = t.customer_id;
+```
+2025-06-03 05:51:13,838 - INFO - App started
+2025-06-03 05:51:15,139 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:51:15,894 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:51:15,898 - WARNING - Non-SQL response received: WITH TotalImpairment AS (
+    SELECT SUM(impairment_amount) AS total_impairment
+    FROM Loan_Impairments
+)
+SELECT impairment_type, 
+       SUM(impairment_amount) / (SELECT total_impairment FROM TotalImpairment) * 100 AS percentage_of_total_impairment
+FROM Loan_Impairments
+GROUP BY impairment_type;
+2025-06-03 05:51:26,375 - INFO - App started
+2025-06-03 05:51:27,709 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:51:28,282 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:51:28,295 - INFO - User query: Show total loan payments over time by month
+2025-06-03 05:51:28,296 - INFO - Generated SQL: SELECT strftime('%Y-%m', payment_date) AS month_year, SUM(payment_amount) AS total_payments
+FROM Loan_Payments
+GROUP BY strftime('%Y-%m', payment_date)
+ORDER BY month_year;
+2025-06-03 05:51:35,230 - INFO - App started
+2025-06-03 05:51:36,535 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:51:49,687 - INFO - App started
+2025-06-03 05:51:51,087 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:51:51,568 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:51:51,577 - INFO - User query: How has impairment value changed over time?
+2025-06-03 05:51:51,577 - INFO - Generated SQL: SELECT impairment_date, SUM(impairment_amount) AS total_impairment_amount
+FROM Loan_Impairments
+GROUP BY impairment_date
+ORDER BY impairment_date;
+2025-06-03 05:58:54,471 - INFO - App started
+2025-06-03 05:58:56,235 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:59:03,760 - INFO - App started
+2025-06-03 05:59:05,133 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 05:59:05,820 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 05:59:05,838 - INFO - User query: How has impairment value changed over time?
+2025-06-03 05:59:05,839 - INFO - Generated SQL: SELECT impairment_date, SUM(impairment_amount) AS total_impairment
+FROM Loan_Impairments
+GROUP BY impairment_date
+ORDER BY impairment_date;
+2025-06-03 05:59:19,313 - INFO - App started
+2025-06-03 05:59:28,034 - INFO - App started
+2025-06-03 05:59:29,392 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:00:28,270 - INFO - App started
+2025-06-03 06:00:29,715 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:00:30,213 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:00:30,232 - INFO - User query: How has impairment value changed over time?
+2025-06-03 06:00:30,232 - INFO - Generated SQL: SELECT impairment_date, SUM(impairment_amount) AS total_impairment
+FROM Loan_Impairments
+GROUP BY impairment_date
+ORDER BY impairment_date;
+2025-06-03 06:01:11,279 - INFO - App started
+2025-06-03 06:01:19,421 - INFO - App started
+2025-06-03 06:01:21,279 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:01:26,528 - INFO - App started
+2025-06-03 06:01:27,538 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:01:28,979 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:01:29,020 - INFO - User query: How has impairment value changed over time?
+2025-06-03 06:01:29,020 - INFO - Generated SQL: SELECT loan_id, impairment_date, impairment_amount
+FROM Loan_Impairments
+ORDER BY loan_id, impairment_date;
+2025-06-03 06:05:14,598 - INFO - App started
+2025-06-03 06:05:43,821 - INFO - App started
+2025-06-03 06:05:45,771 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:06:03,637 - INFO - App started
+2025-06-03 06:06:04,604 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:06:05,670 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:06:05,738 - INFO - User query: How has impairment value changed over time?
+2025-06-03 06:06:05,739 - INFO - Generated SQL: SELECT ImpairmentID, LoanID, AssessmentDate, ExpectedCreditLoss, ProvisionAmount
+FROM Impairments
+ORDER BY AssessmentDate;
+2025-06-03 06:06:18,690 - INFO - App started
+2025-06-03 06:06:19,794 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:06:25,123 - INFO - App started
+2025-06-03 06:06:26,171 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:06:26,662 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:06:26,699 - INFO - User query: How has impairment value changed over time?
+2025-06-03 06:06:26,700 - INFO - Generated SQL: SELECT ImpairmentID, LoanID, AssessmentDate, ExpectedCreditLoss, ProvisionAmount
+FROM Impairments
+ORDER BY AssessmentDate;
+2025-06-03 06:07:04,726 - INFO - App started
+2025-06-03 06:07:05,867 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:07:06,390 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:07:06,408 - INFO - User query: Show total loan payments over time by month.
+2025-06-03 06:07:06,408 - INFO - Generated SQL: SELECT strftime('%Y-%m', payment_date) AS month, SUM(payment_amount) AS total_payments
+FROM Loan_Payments
+GROUP BY strftime('%Y-%m', payment_date)
+ORDER BY month;
+2025-06-03 06:07:27,972 - INFO - App started
+2025-06-03 06:07:29,162 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:07:45,109 - INFO - App started
+2025-06-03 06:07:46,158 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:07:47,101 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:07:47,110 - ERROR - SQL processing error: no such column: i.ImpairmentID
+2025-06-03 06:11:15,370 - INFO - App started
+2025-06-03 06:11:17,466 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:11:18,147 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:11:18,158 - INFO - User query: Show total number of loans taken by each customer.
+2025-06-03 06:11:18,159 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, COUNT(l.loan_id) AS total_loans
+FROM Customers c
+LEFT JOIN Loans l ON c.customer_id = l.customer_id
+GROUP BY c.customer_id, c.first_name, c.last_name;
+2025-06-03 06:11:27,176 - INFO - App started
+2025-06-03 06:11:28,838 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:21:10,282 - INFO - App started
+2025-06-03 06:21:11,760 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:21:11,770 - INFO - User query: Show total number of loans taken by each customer.
+2025-06-03 06:21:11,770 - INFO - Generated SQL: SELECT Customers.customer_id, COUNT(Loans.loan_id) AS total_loans
+FROM Customers
+LEFT JOIN Loans ON Customers.customer_id = Loans.customer_id
+GROUP BY Customers.customer_id;
+2025-06-03 06:21:23,527 - INFO - App started
+2025-06-03 06:21:25,138 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:21:28,842 - INFO - App started
+2025-06-03 06:21:29,849 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:21:30,542 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:21:30,549 - INFO - User query: Show total number of loans taken by each customer.
+2025-06-03 06:21:30,549 - INFO - Generated SQL: SELECT Customers.customer_id, Customers.first_name, Customers.last_name, COUNT(Loans.loan_id) AS total_loans
+FROM Customers
+LEFT JOIN Loans ON Customers.customer_id = Loans.customer_id
+GROUP BY Customers.customer_id;
+2025-06-03 06:23:47,374 - INFO - App started
+2025-06-03 06:23:48,635 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 06:23:49,067 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 06:23:49,074 - INFO - User query: Display total payment amount for each loan ID
+2025-06-03 06:23:49,074 - INFO - Generated SQL: SELECT loan_id, SUM(payment_amount) AS total_payment_amount
+FROM Loan_Payments
+GROUP BY loan_id;
+2025-06-03 08:36:34,288 - INFO - App started
+2025-06-03 08:36:35,811 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:36:35,833 - INFO - User query: What is the total loan amount taken by each customer?
+2025-06-03 08:36:35,834 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, SUM(l.loan_amount) AS total_loan_amount
+FROM Customers c
+JOIN Loans l ON c.customer_id = l.customer_id
+GROUP BY c.customer_id, c.first_name, c.last_name;
+2025-06-03 08:37:22,351 - INFO - App started
+2025-06-03 08:37:23,771 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:37:23,778 - INFO - User query: What is the average loan amount per customer, grouped by interest rate?
+
+2025-06-03 08:37:23,778 - INFO - Generated SQL: SELECT Customers.customer_id, Loans.interest_rate, AVG(Loans.loan_amount) AS avg_loan_amount
+FROM Customers
+JOIN Loans ON Customers.customer_id = Loans.customer_id
+GROUP BY Customers.customer_id, Loans.interest_rate;
+2025-06-03 08:37:47,039 - INFO - App started
+2025-06-03 08:37:48,313 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:37:48,331 - INFO - User query: How much payment was made each month?
+
+2025-06-03 08:37:48,332 - INFO - Generated SQL: SELECT strftime('%Y-%m', payment_date) AS payment_month, SUM(payment_amount) AS total_payment
+FROM Loan_Payments
+GROUP BY payment_month;
+2025-06-03 08:40:09,852 - INFO - App started
+2025-06-03 08:40:11,501 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:40:17,230 - INFO - App started
+2025-06-03 08:40:18,225 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:40:18,767 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:40:18,782 - INFO - User query: How much payment was made each month?
+
+2025-06-03 08:40:18,782 - INFO - Generated SQL: SELECT strftime('%Y-%m', payment_date) AS month, SUM(payment_amount) AS total_payment
+FROM Loan_Payments
+GROUP BY strftime('%Y-%m', payment_date)
+ORDER BY month;
+2025-06-03 08:40:57,181 - INFO - App started
+2025-06-03 08:40:58,416 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:40:59,025 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:40:59,033 - INFO - User query: What is the total impairment amount by month?
+
+2025-06-03 08:40:59,033 - INFO - Generated SQL: SELECT strftime('%Y-%m', AssessmentDate) AS Month,
+       SUM(ProvisionAmount) AS TotalImpairmentAmount
+FROM Impairments
+GROUP BY Month;
+2025-06-03 08:41:07,833 - INFO - App started
+2025-06-03 08:41:08,930 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:41:49,983 - INFO - App started
+2025-06-03 08:41:51,154 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:41:51,979 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:41:51,991 - INFO - User query: How much has each customer paid over time, shown monthly?
+
+2025-06-03 08:41:51,991 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, strftime('%Y-%m', lp.payment_date) AS payment_month, SUM(lp.payment_amount) AS total_payment
+FROM Customers c
+JOIN Loans l ON c.customer_id = l.customer_id
+JOIN Loan_Payments lp ON l.loan_id = lp.loan_id
+GROUP BY c.customer_id, payment_month
+ORDER BY c.customer_id, payment_month;
+2025-06-03 08:42:20,304 - INFO - App started
+2025-06-03 08:42:21,577 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:42:22,227 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:42:22,257 - INFO - User query: What is the total impairment amount by month?
+
+2025-06-03 08:42:22,258 - INFO - Generated SQL: SELECT strftime('%Y-%m', AssessmentDate) AS Month, SUM(ProvisionAmount) AS TotalImpairmentAmount
+FROM Impairments
+GROUP BY strftime('%Y-%m', AssessmentDate);
+2025-06-03 08:43:02,260 - INFO - App started
+2025-06-03 08:43:03,938 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:43:12,287 - INFO - App started
+2025-06-03 08:43:13,328 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:43:13,842 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:43:13,861 - INFO - User query: What is the total impairment amount by month?
+
+2025-06-03 08:43:13,861 - INFO - Generated SQL: SELECT strftime('%Y-%m', AssessmentDate) AS Month, SUM(ProvisionAmount) AS TotalImpairmentAmount
+FROM Impairments
+GROUP BY Month;
+2025-06-03 08:47:44,007 - INFO - App started
+2025-06-03 08:47:45,455 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 08:47:45,955 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 08:47:45,962 - INFO - User query: What is the total loan impairment amount by month?
+
+2025-06-03 08:47:45,962 - INFO - Generated SQL: SELECT strftime('%Y-%m', Impairments.AssessmentDate) AS Month,
+       SUM(Impairments.ProvisionAmount) AS TotalImpairmentAmount
+FROM Impairments
+GROUP BY Month;
+2025-06-03 08:59:17,019 - INFO - App started
+2025-06-03 08:59:18,784 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 09:00:16,877 - INFO - App started
+2025-06-03 09:00:18,057 - INFO - Excel data uploaded and imported into SQLite.
+2025-06-03 09:00:18,733 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:00:18,740 - INFO - User query: What is the total loan impairment amount by month?
+
+2025-06-03 09:00:18,741 - INFO - Generated SQL: SELECT strftime('%Y-%m', ip.impairment_date) AS month,
+       SUM(ip.impairment_amount) AS total_impairment_amount
+FROM Loan_Impairments ip
+GROUP BY month;
+2025-06-03 09:03:44,592 - INFO - App started
+2025-06-03 09:03:51,960 - INFO - App started
+2025-06-03 09:03:54,035 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:03:54,069 - INFO - User query: What is the total loan amount taken by each customer?
+2025-06-03 09:03:54,070 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, SUM(l.loan_amount) AS total_loan_amount
+FROM Customers c
+JOIN Loans l ON c.customer_id = l.customer_id
+GROUP BY c.customer_id;
+2025-06-03 09:04:11,271 - INFO - App started
+2025-06-03 09:04:12,381 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:04:12,400 - INFO - User query: What is the average loan amount per customer, grouped by interest rate?
+2025-06-03 09:04:12,400 - INFO - Generated SQL: SELECT interest_rate, AVG(loan_amount) AS avg_loan_amount
+FROM Loans
+GROUP BY interest_rate;
+2025-06-03 09:04:49,758 - INFO - App started
+2025-06-03 09:04:51,160 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:04:51,169 - INFO - User query: How much payment was made each month?
+2025-06-03 09:04:51,169 - INFO - Generated SQL: SELECT strftime('%Y-%m', payment_date) AS month, SUM(payment_amount) AS total_payment
+FROM Loan_Payments
+GROUP BY strftime('%Y-%m', payment_date)
+ORDER BY month;
+2025-06-03 09:04:56,447 - INFO - App started
+2025-06-03 09:05:24,631 - INFO - App started
+2025-06-03 09:05:26,082 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:05:26,096 - INFO - User query: How much has each customer paid over time, shown monthly?
+2025-06-03 09:05:26,096 - INFO - Generated SQL: SELECT c.customer_id, c.first_name, c.last_name, strftime('%Y-%m', lp.payment_date) AS payment_month, SUM(lp.payment_amount) AS total_payment
+FROM Customers c
+JOIN Loans l ON c.customer_id = l.customer_id
+JOIN Loan_Payments lp ON l.loan_id = lp.loan_id
+GROUP BY c.customer_id, payment_month
+ORDER BY c.customer_id, payment_month;
+2025-06-03 09:05:42,630 - INFO - App started
+2025-06-03 09:05:43,831 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:05:43,848 - INFO - User query: What is the total impairment amount by month?
+2025-06-03 09:05:43,849 - INFO - Generated SQL: SELECT strftime('%Y-%m', i.impairment_date) AS month,
+       SUM(i.impairment_amount) AS total_impairment_amount
+FROM Loan_Impairments i
+GROUP BY month;
+2025-06-03 09:05:47,244 - INFO - App started
+2025-06-03 09:05:51,964 - INFO - App started
+2025-06-03 09:06:35,618 - INFO - App started
+2025-06-03 09:06:36,877 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:06:36,886 - ERROR - SQL processing error: no such column: Impairments.expected credit loss
+2025-06-03 09:07:19,975 - INFO - App started
+2025-06-03 09:07:21,279 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:07:21,302 - INFO - User query: how are you
+2025-06-03 09:07:21,303 - INFO - Generated SQL: SELECT * FROM Customers;
+2025-06-03 09:07:32,062 - INFO - App started
+2025-06-03 09:07:33,291 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:07:33,299 - INFO - User query: bad data
+2025-06-03 09:07:33,299 - INFO - Generated SQL: SELECT * FROM Customers;
+2025-06-03 09:07:53,783 - INFO - App started
+2025-06-03 09:07:54,820 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:07:54,822 - WARNING - Non-SQL response received: I'm sorry, I can only assist with generating SQL queries. How about I help you with that?
+2025-06-03 09:08:04,117 - INFO - App started
+2025-06-03 09:08:08,248 - INFO - App started
+2025-06-03 09:08:15,215 - INFO - App started
+2025-06-03 09:08:19,452 - INFO - App started
+2025-06-03 09:10:01,895 - INFO - App started
+2025-06-03 09:10:03,193 - INFO - HTTP Request: POST https://nlptosqlaz.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2024-12-01-preview "HTTP/1.1 200 OK"
+2025-06-03 09:10:03,208 - INFO - User query: How does total impairment by type evolve over time?
+
+2025-06-03 09:10:03,209 - INFO - Generated SQL: SELECT impairment_type, SUM(impairment_amount) AS total_impairment
+FROM Loan_Impairments
+GROUP BY impairment_type, DATE(impairment_date)
+ORDER BY DATE(impairment_date);
+2025-06-03 09:11:21,144 - INFO - App started
+2025-06-03 09:11:57,894 - INFO - App started
